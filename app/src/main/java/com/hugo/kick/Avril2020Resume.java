@@ -16,14 +16,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-public class Avril2020Resume extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Avril2020Resume extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     androidx.appcompat.widget.Toolbar toolbar;
     Button button, back;
+    BottomNavigationView bottomNavigationView;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -37,10 +39,14 @@ public class Avril2020Resume extends AppCompatActivity implements NavigationView
         toolbar = findViewById(R.id.toolbar);
         button = findViewById(R.id.button);
         back = findViewById(R.id.button2);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+        bottomNavigationView.setSelectedItemId(R.id.magazine);
         Menu menu = navigationView.getMenu();
+        Menu menu2 = bottomNavigationView.getMenu();
         menu.findItem(R.id.nav_logout).setVisible(false);
         menu.findItem(R.id.nav_profil).setVisible(false);
+        menu2.findItem(R.id.contact).setVisible(false);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle;
@@ -48,7 +54,6 @@ public class Avril2020Resume extends AppCompatActivity implements NavigationView
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(this);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +73,10 @@ public class Avril2020Resume extends AppCompatActivity implements NavigationView
                 finish();
             }
         });
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -84,36 +93,36 @@ public class Avril2020Resume extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_magazine:
+            case R.id.magazine:
                 Intent intent4 = new Intent(Avril2020Resume.this, MainActivity.class);
                 startActivity(intent4);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
-            case R.id.nav_boutique:
+                return true;
+            case R.id.boutique:
                 Intent intent = new Intent(Avril2020Resume.this, BoutiqueActivity.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
+                return true;
             case R.id.nav_contact:
                 Intent intent2 = new Intent(Avril2020Resume.this, ContactActivity.class);
                 startActivity(intent2);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
-            case R.id.nav_sortiedumois:
+                return true;
+            case R.id.sortiedumois:
                 Intent intent3 = new Intent(Avril2020Resume.this, SortiedumoisActivity.class);
                 startActivity(intent3);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
+                return true;
             case R.id.nav_share:
                 Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
-                break;
+                return true;
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();
-                break;
+                return true;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
 
 
     }

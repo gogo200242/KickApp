@@ -41,8 +41,10 @@ public class BoutiqueActivity extends AppCompatActivity implements NavigationVie
 
         bottomNavigationView.setSelectedItemId(R.id.boutique);
         Menu menu = navigationView.getMenu();
+        Menu menu2 = bottomNavigationView.getMenu();
         menu.findItem(R.id.nav_logout).setVisible(false);
         menu.findItem(R.id.nav_profil).setVisible(false);
+        menu2.findItem(R.id.contact).setVisible(false);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle;
@@ -68,13 +70,11 @@ public class BoutiqueActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_magazine:
             case R.id.magazine:
                 Intent intent4 = new Intent(BoutiqueActivity.this, MainActivity.class);
                 startActivity(intent4);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
-            case R.id.nav_boutique:
             case R.id.boutique:
                 return true;
             case R.id.nav_contact:
@@ -82,7 +82,6 @@ public class BoutiqueActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent2);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
-            case R.id.nav_sortiedumois:
             case R.id.sortiedumois:
                 Intent intent3 = new Intent(BoutiqueActivity.this, SortiedumoisActivity.class);
                 startActivity(intent3);

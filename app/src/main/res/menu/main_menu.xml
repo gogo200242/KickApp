@@ -5,18 +5,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_magazine"
-            android:title="Magazine" />
-
-        <item
-            android:id="@+id/nav_boutique"
-            android:title="Boutique" />
-
-        <item
-            android:id="@+id/nav_sortiedumois"
-            android:title="Les Sorties Du Mois" />
-
-        <item
             android:id="@+id/nav_contact"
             android:title="Nous Contacter" />
 

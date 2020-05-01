@@ -13,5 +13,9 @@
           android:title="Les Sorties du mois"
           android:icon="@drawable/ic_sneakers"/>
 
+    <item android:id="@+id/contact"
+        android:title="Contact"
+        android:icon="@drawable/ic_back"/>
+
 
 </menu>
