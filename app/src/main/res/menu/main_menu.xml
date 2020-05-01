@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_magazine"
+            android:title="Magazine" />
+
+        <item
+            android:id="@+id/nav_boutique"
+            android:title="Boutique" />
+
+        <item
+            android:id="@+id/nav_sortiedumois"
+            android:title="Les Sorties Du Mois" />
+
+        <item
+            android:id="@+id/nav_contact"
+            android:title="Nous Contacter" />
+
+    </group>
+
+
+    <item android:title="Profil">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_login"
+                    android:title="Se Connecter" />
+
+                <item
+                    android:id="@+id/nav_profil"
+                    android:title="Profil" />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="Se Deconnecter" />
+            </group>
+        </menu>
+
+
+    </item>
+
+
+    <item android:title="Communauté">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_share"
+                    android:title="Partager" />
+
+                <item
+                    android:id="@+id/nav_rateus"
+                    android:title="Notez Nous" />
+            </group>
+        </menu>
+
+    </item>
+
+</menu>
