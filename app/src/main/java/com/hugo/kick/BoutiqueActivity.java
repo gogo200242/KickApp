@@ -17,13 +17,15 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-public class BoutiqueActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BoutiqueActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     androidx.appcompat.widget.Toolbar toolbar;
+    BottomNavigationView bottomNavigationView;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -35,7 +37,9 @@ public class BoutiqueActivity extends AppCompatActivity implements NavigationVie
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
+        bottomNavigationView.setSelectedItemId(R.id.boutique);
         Menu menu = navigationView.getMenu();
         menu.findItem(R.id.nav_logout).setVisible(false);
         menu.findItem(R.id.nav_profil).setVisible(false);
@@ -47,6 +51,7 @@ public class BoutiqueActivity extends AppCompatActivity implements NavigationVie
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -64,32 +69,35 @@ public class BoutiqueActivity extends AppCompatActivity implements NavigationVie
 
         switch (menuItem.getItemId()) {
             case R.id.nav_magazine:
+            case R.id.magazine:
                 Intent intent4 = new Intent(BoutiqueActivity.this, MainActivity.class);
                 startActivity(intent4);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
+                return true;
             case R.id.nav_boutique:
-                break;
+            case R.id.boutique:
+                return true;
             case R.id.nav_contact:
                 Intent intent2 = new Intent(BoutiqueActivity.this, ContactActivity.class);
                 startActivity(intent2);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
+                return true;
             case R.id.nav_sortiedumois:
+            case R.id.sortiedumois:
                 Intent intent3 = new Intent(BoutiqueActivity.this, SortiedumoisActivity.class);
                 startActivity(intent3);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                break;
+                return true;
             case R.id.nav_share:
                 Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
-                break;
+                return true;
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();
-                break;
+                return true;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+        return false;
 
 
     }
