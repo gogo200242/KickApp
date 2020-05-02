@@ -3,9 +3,12 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#E26198</item>
-        <item name="colorPrimaryDark">#E26198</item>
+        <item name="colorPrimary">#ffa1bd</item>
+        <item name="colorPrimaryDark">#ffa1bd</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">#00000000</item>
+
+        <item name="android:windowContentTransitions">true</item>
     </style>
+
 </resources>
