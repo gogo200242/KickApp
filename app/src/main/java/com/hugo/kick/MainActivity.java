@@ -110,6 +110,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent6);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
+            case R.id.nav_signup:
+                Intent intent7 = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent7);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
             case R.id.nav_share:
                 Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
                 return true;

@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_hamburger"
+            app:navigationIcon="@drawable/ic_back"
             tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,14 +86,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical">
 
 
 <!--Prenom-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/prenom"
+                android:id="@+id/reg_prenom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Prénom"
@@ -108,7 +106,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 <!--Nom-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nom"
+                android:id="@+id/reg_nom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nom"
@@ -123,7 +121,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 <!--Pseudo-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/pseudo"
+                android:id="@+id/reg_pseudo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Pseudo"
@@ -138,7 +136,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 <!--Adresse Mail-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email"
+                android:id="@+id/reg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Adresse mail"
@@ -153,7 +151,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 <!--Mot de passe-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password"
+                android:id="@+id/reg_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mot de passe"
@@ -169,23 +167,27 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
-
+<!--Go-->
         <Button
+            android:id="@+id/reg_go_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GO"
             android:fontFamily="@font/ubuntu_light"
             android:background="@drawable/custom_button"
             android:textColor="#ffa1bd"
+            android:layout_margin="5dp"
             android:transitionName="go_tran"/>
-
+<!--Deja inscris-->
         <Button
+            android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Déja inscris ? Connecte-toi !"
             android:textColor="#000"
             android:background="#00000000"
             android:fontFamily="@font/ubuntu_light"
+            android:layout_margin="5dp"
             android:transitionName="inscris_tran"/>
 
     </LinearLayout>
