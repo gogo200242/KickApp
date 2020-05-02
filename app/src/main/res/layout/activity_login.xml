@@ -98,6 +98,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:transitionName="pseudo_tran"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -117,6 +118,19 @@
                 android:transitionName="password_tran"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rester connecté"
+            android:fontFamily="@font/ubuntu_light"
+            android:textSize="14sp"
+            android:layout_marginTop="15dp"/>
 <!--Mot de passe oublié-->
         <Button
             android:id="@+id/lost_password"
@@ -125,10 +139,9 @@
             android:background="#00000000"
             android:text="Mot de passe oublié ?"
             android:fontFamily="@font/ubuntu_light"
-            android:layout_gravity="right"
             android:elevation="0dp"
             android:layout_margin="5dp"
-
+            android:layout_toRightOf="@+id/checkbox"
             android:transitionName="lostpassword_tran"/>
 <!--GO-->
         <Button
@@ -141,7 +154,8 @@
             android:textColor="#ffa1bd"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:transitionName="go_tran"/>
+            android:transitionName="go_tran"
+            android:layout_below="@+id/lost_password"/>
 <!--Inscription-->
         <Button
             android:id="@+id/signup_button"
@@ -153,8 +167,10 @@
             android:layout_gravity="right"
             android:elevation="0dp"
             android:layout_margin="5dp"
-            android:transitionName="inscris_tran"/>
+            android:transitionName="inscris_tran"
+            android:layout_below="@+id/go_button"/>
 
+        </RelativeLayout>
 
     </LinearLayout>
 

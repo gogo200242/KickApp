@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setSelectedItemId(R.id.magazine);
         Menu menu = navigationView.getMenu();
         Menu menu2 = bottomNavigationView.getMenu();
-        menu.findItem(R.id.nav_logout).setVisible(false);
-        menu.findItem(R.id.nav_profil).setVisible(false);
+        menu.findItem(R.id.nav_login).setVisible(false);
+        menu.findItem(R.id.nav_signup).setVisible(false);
         menu2.findItem(R.id.contact).setVisible(false);
 
 
@@ -105,13 +105,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent3);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true ;
-            case R.id.nav_login:
-                Intent intent6 = new Intent(MainActivity.this, LoginActivity.class);
+            case R.id.nav_profil:
+                Intent intent6 = new Intent(MainActivity.this, ProfilActivity.class);
                 startActivity(intent6);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
-            case R.id.nav_signup:
-                Intent intent7 = new Intent(MainActivity.this, SignUpActivity.class);
+            case R.id.nav_logout:
+                Intent intent7 = new Intent(MainActivity.this, LogoutActivity.class);
                 startActivity(intent7);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;

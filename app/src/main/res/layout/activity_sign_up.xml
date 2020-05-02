@@ -53,143 +53,159 @@
         </androidx.appcompat.widget.Toolbar>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#fafafa"
-        android:padding="20dp">
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/kickshop_logo"
-        android:transitionName="logo_image"/>
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenue !"
-        android:textSize="40sp"
-        android:fontFamily="@font/ubuntu_bold"
-        android:layout_marginTop="-20dp"
-        android:transitionName="logo_text"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inscris-toi"
-            android:fontFamily="@font/ubuntu_light"
-            android:textSize="18sp"
-            android:transitionName="logo_desc"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-<!--Prenom-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reg_prenom"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Prénom"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:layout_height="match_parent"
+                android:background="#fafafa"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/kickshop_logo"
+                    android:transitionName="logo_image" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:text="Bienvenue !"
+                    android:textSize="40sp"
+                    android:transitionName="logo_text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="Inscris-toi"
+                    android:textSize="18sp"
+                    android:transitionName="logo_desc" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:transitionName="prenom_tran"/>
+                    android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
-<!--Nom-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reg_nom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nom"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                <com.google.android.material.textfield.TextInputEditText
+                    <!--Prenom-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_prenom"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Prénom">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:transitionName="prenom_tran" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <!--Nom-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_nom"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nom">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:transitionName="nom_tran" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <!--Pseudo-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_pseudo"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pseudo">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:transitionName="pseudo_tran" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <!--Adresse Mail-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_email"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Adresse mail">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:transitionName="mail_tran" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <!--Mot de passe-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/reg_password"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Mot de passe"
+                        app:passwordToggleEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword"
+                            android:transitionName="password_tran" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+                <!--Go-->
+                <Button
+                    android:id="@+id/reg_go_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:transitionName="nom_tran"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-<!--Pseudo-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reg_pseudo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Pseudo"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_margin="5dp"
+                    android:background="@drawable/custom_button"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="GO"
+                    android:textColor="#ffa1bd"
+                    android:transitionName="go_tran" />
+                <!--Deja inscris-->
+                <Button
+                    android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:transitionName="pseudo_tran"/>
+                    android:layout_margin="5dp"
+                    android:background="#00000000"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="Déja inscris ? Connecte-toi !"
+                    android:textColor="#000"
+                    android:transitionName="inscris_tran" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-<!--Adresse Mail-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reg_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Adresse mail"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:transitionName="mail_tran"/>
+        </ScrollView>
 
-            </com.google.android.material.textfield.TextInputLayout>
-<!--Mot de passe-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reg_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mot de passe"
-                app:passwordToggleEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:transitionName="password_tran"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-<!--Go-->
-        <Button
-            android:id="@+id/reg_go_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GO"
-            android:fontFamily="@font/ubuntu_light"
-            android:background="@drawable/custom_button"
-            android:textColor="#ffa1bd"
-            android:layout_margin="5dp"
-            android:transitionName="go_tran"/>
-<!--Deja inscris-->
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Déja inscris ? Connecte-toi !"
-            android:textColor="#000"
-            android:background="#00000000"
-            android:fontFamily="@font/ubuntu_light"
-            android:layout_margin="5dp"
-            android:transitionName="inscris_tran"/>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
