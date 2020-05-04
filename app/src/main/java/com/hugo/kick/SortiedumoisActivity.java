@@ -39,8 +39,9 @@ public class SortiedumoisActivity extends AppCompatActivity implements Navigatio
         bottomNavigationView.setSelectedItemId(R.id.sortiedumois);
         Menu menu = navigationView.getMenu();
         Menu menu2 = bottomNavigationView.getMenu();
-        menu.findItem(R.id.nav_logout).setVisible(false);
         menu.findItem(R.id.nav_profil).setVisible(false);
+        menu.findItem(R.id.nav_login).setVisible(false);
+        menu.findItem(R.id.nav_signup).setVisible(false);
         menu2.findItem(R.id.contact).setVisible(false);
 
         navigationView.bringToFront();
@@ -84,8 +85,19 @@ public class SortiedumoisActivity extends AppCompatActivity implements Navigatio
                 return true;
             case R.id.sortiedumois:
                 return true;
+            case R.id.nav_logout:
+                Intent intent7 = new Intent(SortiedumoisActivity.this, LogoutActivity.class);
+                startActivity(intent7);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
             case R.id.nav_share:
-                Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent(Intent.ACTION_SEND);
+                intent6.setType("text/plain");
+                String ShareBody = ("Lien");
+                String ShareSub = ("Texte");
+                intent6.putExtra(Intent.EXTRA_SUBJECT, ShareSub);
+                intent6.putExtra(Intent.EXTRA_TEXT, ShareBody);
+                startActivity(Intent.createChooser(intent6, "Partage avec"));
                 return true;
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();

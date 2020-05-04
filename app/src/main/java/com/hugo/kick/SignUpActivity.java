@@ -1,27 +1,39 @@
 package com.hugo.kick;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
     TextInputLayout regPrenom, regNom, regPseudo, regEmail, regPassword;
-    Button login_button, btn_go;
+    Button login_button, btn_go, btn_connecte;
+    Dialog myDialog;
+    TextView textclose, textKick, textLeMagazine, textmessage;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    FirebaseAuth mAuth;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -29,6 +41,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_sign_up);
+
+        myDialog = new Dialog(this);
 
         login_button = findViewById(R.id.btn_login);
         btn_go = findViewById(R.id.reg_go_btn);
@@ -38,126 +52,106 @@ public class SignUpActivity extends AppCompatActivity {
         regEmail = findViewById(R.id.reg_email);
         regPassword = findViewById(R.id.reg_password);
 
+        mAuth = FirebaseAuth.getInstance();
+
         btn_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validatePassword() | !validatePseudo() | !validateEmail() | !validatePrenom() | !validateNom()) {
+
+                String email = regEmail.getEditText().getText().toString().trim();
+                String password = regPassword.getEditText().getText().toString().trim();
+                String prenom = regPrenom.getEditText().getText().toString().trim();
+                String nom = regNom.getEditText().getText().toString().trim();
+                String pseudo = regPseudo.getEditText().getText().toString().trim();
+
+                if(TextUtils.isEmpty(prenom)) {
+                    regPrenom.setError("Le champs ne peut pas être vide");
                     return;
-                } else {
-                    rootNode = FirebaseDatabase.getInstance();
-                    reference = rootNode.getReference("users");
-
-                    String prenom = regPrenom.getEditText().getText().toString();
-                    String nom = regNom.getEditText().getText().toString();
-                    String pseudo = regPseudo.getEditText().getText().toString();
-                    String email = regEmail.getEditText().getText().toString();
-                    String password = regPassword.getEditText().getText().toString();
-
-                    UserHelperClass helperClass = new UserHelperClass(prenom, nom, pseudo, email, password);
-
-                    reference.child(pseudo).setValue(helperClass);
                 }
+
+                if(TextUtils.isEmpty(nom)) {
+                    regNom.setError("Le champs ne peut pas être vide");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(pseudo)) {
+                    regPseudo.setError("Le champs ne peut pas être vide");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(email)) {
+                    regEmail.setError("Le champs ne peut pas être vide");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)) {
+                    regPassword.setError("Le champs ne peut pas être vide");
+                    return;
+                }
+
+                if(password.length() < 6) {
+                    regPassword.setError("Le mot de passe doit contenir au moins 6 caractères");
+                    return;
+                }
+
+                mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            openDialog();
+                        } else {
+                            //faire popup : oups une erreur est survenu
+                        }
+                    }
+                });
+
+
             }
         });
+
+
 
         login_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick (View v){
+        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+    });
+}
+
+    public void openDialog() {
+        myDialog.setContentView(R.layout.custom_popup);
+
+        textclose = myDialog.findViewById(R.id.textview17);
+        textKick = myDialog.findViewById(R.id.Kick);
+        textLeMagazine = myDialog.findViewById(R.id.LeMagazine);
+        textmessage = myDialog.findViewById(R.id.TextView18);
+        btn_connecte = myDialog.findViewById(R.id.btn_connecte);
+
+        textclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                myDialog.dismiss();
             }
         });
+
+        btn_connecte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent5 = new Intent(SignUpActivity.this, LoginActivity.class);
+                startActivity(intent5);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 
-    private Boolean validatePseudo() {
-        String val = regPseudo.getEditText().getText().toString();
-        String noSpace = "\\A\\w{4,20}\\z";
 
-        if (val.isEmpty()) {
-            regPseudo.setError("Le champs ne peut être vide");
-            return false;
-        } else if (val.length()>= 20) {
-            regPseudo.setError("Pseudo trop long");
-            return false;
-        } else if (!val.matches(noSpace)) {
-            regPseudo.setError("Il ne doit pas y avoir d'espaces");
-            return false;
-        } else {
-            regPseudo.setError(null);
-            regPseudo.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    private Boolean validatePassword() {
-        String val = regPassword.getEditText().getText().toString();
-        String passwordValidation = "^" +
-                "(?=.*[0-9])" +              //au moins 1 chiffre
-                "(?=.*[a-z])" +              //au moins une lettre
-                "(?=.*[A-Z])" +              //au moins une majuscule
-                "(?=.*[a-zA-Z])" +             //toutes les lettres
-                //"(?=.*[@#$%^&+=])" +           //au moins 1 caractère special
-                "(?=\\S+$)" +                  //pas d'espace
-                ".{4,}" +                      //au moins 4 caractères
-                "$";
-
-        if (val.isEmpty()) {
-            regPassword.setError("Le champs ne peut être vide");
-            return false;
-        } else if (!val.matches(passwordValidation)) {
-            regPassword.setError("Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre");
-            return false;
-        }
-        else {
-            regPassword.setError(null);
-            regPassword.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    private Boolean validatePrenom() {
-        String val = regPrenom.getEditText().getText().toString();
-
-        if (val.isEmpty()) {
-            regPrenom.setError("Le champs ne peut être vide");
-            return false;
-        } else {
-            regPrenom.setError(null);
-            regPrenom.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    private Boolean validateNom() {
-        String val = regNom.getEditText().getText().toString();
-
-        if (val.isEmpty()) {
-            regNom.setError("Le champs ne peut être vide");
-            return false;
-        } else {
-            regNom.setError(null);
-            regNom.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    private Boolean validateEmail() {
-        String val = regEmail.getEditText().getText().toString();
-        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
-        if (val.isEmpty()) {
-            regEmail.setError("Le champs ne peut être vide");
-            return false;
-        } else if (!val.matches(emailPattern)) {
-            regEmail.setError("Email invalide");
-            return false;
-        } else {
-            regEmail.setError(null);
-            regEmail.setErrorEnabled(false);
-            return true;
-        }
-    }
 }
 
 

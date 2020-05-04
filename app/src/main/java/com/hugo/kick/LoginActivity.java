@@ -7,7 +7,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.wifi.hotspot2.PasspointConfiguration;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,7 +19,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,11 +44,11 @@ public class LoginActivity extends AppCompatActivity {
     Button callSignUp, Go, lostPassword;
     ImageView logo;
     TextView Bienvenue, logodesc;
-    TextInputLayout pseudo, password;
+    TextInputLayout logEmail, logPassword;
     CheckBox checkBox;
+    FirebaseAuth mAuth;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -48,9 +63,12 @@ public class LoginActivity extends AppCompatActivity {
         logo = findViewById(R.id.logo);
         Bienvenue = findViewById(R.id.logo_name);
         logodesc = findViewById(R.id.logo_desc);
-        pseudo = findViewById(R.id.username);
-        password = findViewById(R.id.mdp);
+        logEmail = findViewById(R.id.email);
+        logPassword = findViewById(R.id.mdp);
         checkBox = findViewById(R.id.checkbox);
+
+        mAuth = FirebaseAuth.getInstance();
+
 
         SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("checkbox", "");
@@ -58,90 +76,40 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent8 = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent8);
         } else if (checkbox.equals("false")) {
-            Toast.makeText(this, "Connecte-toi", Toast.LENGTH_SHORT).show();
+
         }
-
-
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("users");
 
         Go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validatePseudo() | !validatePassword()) {
+
+                String email = logEmail.getEditText().getText().toString().trim();
+                String password = logPassword.getEditText().getText().toString().trim();
+
+                if(TextUtils.isEmpty(email)) {
+                    logEmail.setError("Le champs ne peut pas être vide");
                     return;
-                } else {
-                    isUser();
                 }
-            }
 
-            private boolean validatePseudo() {
-                String val = pseudo.getEditText().getText().toString();
-
-                if (val.isEmpty()) {
-                    pseudo.setError("Le champs ne peut être vide");
-                    return false;
-                } else {
-                    pseudo.setError(null);
-                    pseudo.setErrorEnabled(false);
-                    return true;
+                if(TextUtils.isEmpty(password)) {
+                    logPassword.setError("Le champs ne peut pas être vide");
+                    return;
                 }
-            }
 
-            private boolean validatePassword() {
-                String val = password.getEditText().getText().toString();
-
-                if (val.isEmpty()) {
-                    password.setError("Le champs ne peut être vide");
-                    return false;
-                } else {
-                    password.setError(null);
-                    password.setErrorEnabled(false);
-                    return true;
+                if(password.length() < 6) {
+                    logPassword.setError("Le mot de passe doit contenir au moins 6 caractères");
+                    return;
                 }
-            }
 
-            private void isUser() {
-                final String userEnteredPseudo = pseudo.getEditText().getText().toString().trim();
-                final String userEnteredPassword = password.getEditText().getText().toString().trim();
-
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-
-                Query checkUser = reference.orderByChild("pseudo").equalTo(userEnteredPseudo);
-                checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        if (dataSnapshot.exists()) {
-
-                            pseudo.setError(null);
-                            pseudo.setErrorEnabled(false);
-
-                            String passwordFromDB = dataSnapshot.child(userEnteredPseudo).child("password").getValue(String.class);
-
-                            if (passwordFromDB.equals(userEnteredPassword)) {
-
-                                password.setErrorEnabled(false);
-                                password.setError(null);
-
-                                Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(intent2);
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-                            } else {
-                                password.setError("Mauvais mot de passe");
-                                password.requestFocus();
-                            }
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            lancementActivity();
                         } else {
-                            pseudo.setError("Ce pseudo n'existe pas");
-                            pseudo.requestFocus();
+                            //faire popup mauvais mot de passe ou adresse mail
+                            Toast.makeText(LoginActivity.this, "Erreur", Toast.LENGTH_SHORT).show();
                         }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
                     }
                 });
             }
@@ -165,7 +133,6 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("checkbox", "true");
                     editor.apply();
-                    Toast.makeText(LoginActivity.this, "Checked", Toast.LENGTH_SHORT).show();
 
                 } else if (!compoundButton.isChecked()) {
 
@@ -173,12 +140,30 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("checkbox", "false");
                     editor.apply();
-                    Toast.makeText(LoginActivity.this, "Unchecked", Toast.LENGTH_SHORT).show();
                 }
             }
 
         });
 
+        lostPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                startActivity(intent2);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+
     }
+
+    private void lancementActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        Toast.makeText(LoginActivity.this, "Connecter avec succès", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
 

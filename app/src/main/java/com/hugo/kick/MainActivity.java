@@ -51,7 +51,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Menu menu2 = bottomNavigationView.getMenu();
         menu.findItem(R.id.nav_login).setVisible(false);
         menu.findItem(R.id.nav_signup).setVisible(false);
+        menu.findItem(R.id.nav_profil).setVisible(false);
         menu2.findItem(R.id.contact).setVisible(false);
+
+
 
 
 
@@ -116,7 +119,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
             case R.id.nav_share:
-                Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
+                Intent intent8 = new Intent(Intent.ACTION_SEND);
+                intent8.setType("text/plain");
+                String ShareBody = ("Lien");
+                String ShareSub = ("Texte");
+                intent8.putExtra(Intent.EXTRA_SUBJECT, ShareSub);
+                intent8.putExtra(Intent.EXTRA_TEXT, ShareBody);
+                startActivity(Intent.createChooser(intent8, "Partage avec"));
                 return true;
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();

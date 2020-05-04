@@ -12,6 +12,8 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +25,7 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
     NavigationView navigationView;
     androidx.appcompat.widget.Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
+    Button btn_mail;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -35,13 +38,24 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        btn_mail = findViewById(R.id.btn_mail);
 
         bottomNavigationView.setSelectedItemId(R.id.contact);
         Menu menu = navigationView.getMenu();
         Menu menu2 = bottomNavigationView.getMenu();
-        menu.findItem(R.id.nav_logout).setVisible(false);
         menu.findItem(R.id.nav_profil).setVisible(false);
+        menu.findItem(R.id.nav_login).setVisible(false);
+        menu.findItem(R.id.nav_signup).setVisible(false);
         menu2.findItem(R.id.contact).setVisible(false);
+
+        btn_mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ContactActivity.this, SendEmailActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle;
@@ -84,8 +98,19 @@ public class ContactActivity extends AppCompatActivity implements NavigationView
                 startActivity(intent3);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 return true;
+            case R.id.nav_logout:
+                Intent intent7 = new Intent(ContactActivity.this, LogoutActivity.class);
+                startActivity(intent7);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
             case R.id.nav_share:
-                Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent(Intent.ACTION_SEND);
+                intent6.setType("text/plain");
+                String ShareBody = ("Lien");
+                String ShareSub = ("Texte");
+                intent6.putExtra(Intent.EXTRA_SUBJECT, ShareSub);
+                intent6.putExtra(Intent.EXTRA_TEXT, ShareBody);
+                startActivity(Intent.createChooser(intent6, "Partage avec"));
                 return true;
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();
