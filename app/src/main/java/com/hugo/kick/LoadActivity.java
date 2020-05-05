@@ -13,6 +13,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class LoadActivity extends AppCompatActivity {
 
     private static int SPLASH_SCREEN = 4000;
@@ -20,6 +23,7 @@ public class LoadActivity extends AppCompatActivity {
     Animation topAnim, bottomAnim;
     ImageView image;
     TextView kick, slogan;
+
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -34,6 +38,7 @@ public class LoadActivity extends AppCompatActivity {
         image = findViewById(R.id.imageView2);
         kick = findViewById(R.id.textView8);
         slogan = findViewById(R.id.textView9);
+
 
         image.setAnimation(topAnim);
         kick.setAnimation(bottomAnim);

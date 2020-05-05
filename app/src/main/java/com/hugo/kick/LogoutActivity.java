@@ -129,7 +129,13 @@ public class LogoutActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_logout:
                 return true;
             case R.id.nav_share:
-                Toast.makeText(this, "Partage", Toast.LENGTH_SHORT).show();
+                Intent intent8 = new Intent(Intent.ACTION_SEND);
+                intent8.setType("text/plain");
+                String ShareBody = ("Lien");
+                String ShareSub = ("Texte");
+                intent8.putExtra(Intent.EXTRA_SUBJECT, ShareSub);
+                intent8.putExtra(Intent.EXTRA_TEXT, ShareBody);
+                startActivity(Intent.createChooser(intent8, "Partage avec"));
                 return true;
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();

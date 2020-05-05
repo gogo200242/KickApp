@@ -21,6 +21,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -130,6 +132,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.nav_don:
+                Intent intent9 = new Intent(MainActivity.this, DonateActivity.class);
+                startActivity(intent9);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -140,4 +147,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
 }

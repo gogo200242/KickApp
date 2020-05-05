@@ -48,7 +48,11 @@
 
                 <item
                     android:id="@+id/nav_rateus"
-                    android:title="Notez Nous" />
+                    android:title="Note Nous" />
+
+                <item
+                    android:id="@+id/nav_don"
+                    android:title="Faire un don" />
             </group>
         </menu>
 

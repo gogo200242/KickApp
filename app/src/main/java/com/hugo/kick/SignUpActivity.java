@@ -30,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     TextInputLayout regPrenom, regNom, regPseudo, regEmail, regPassword;
     Button login_button, btn_go, btn_connecte;
-    Dialog myDialog;
+    Dialog myDialog, erreurDialog;
     TextView textclose, textKick, textLeMagazine, textmessage;
 
     FirebaseAuth mAuth;
@@ -43,6 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         myDialog = new Dialog(this);
+        erreurDialog = new Dialog(this);
 
         login_button = findViewById(R.id.btn_login);
         btn_go = findViewById(R.id.reg_go_btn);
@@ -100,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             openDialog();
                         } else {
-                            //faire popup : oups une erreur est survenu
+                            openErreurDialog();
                         }
                     }
                 });
@@ -149,6 +150,26 @@ public class SignUpActivity extends AppCompatActivity {
 
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+    }
+
+    public void openErreurDialog() {
+
+        erreurDialog.setContentView(R.layout.custom_popup_erreur);
+
+        textclose = erreurDialog.findViewById(R.id.textview17);
+        textKick = erreurDialog.findViewById(R.id.Kick);
+        textLeMagazine = erreurDialog.findViewById(R.id.LeMagazine);
+        textmessage = erreurDialog.findViewById(R.id.TextView18);
+
+        textclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                erreurDialog.dismiss();
+            }
+        });
+        erreurDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        erreurDialog.show();
+
     }
 
 
