@@ -162,6 +162,11 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.nav_don:
+                Intent intent9 = new Intent(ProfilActivity.this, DonateActivity.class);
+                startActivity(intent9);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

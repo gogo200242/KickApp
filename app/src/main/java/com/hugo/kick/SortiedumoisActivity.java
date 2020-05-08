@@ -102,6 +102,11 @@ public class SortiedumoisActivity extends AppCompatActivity implements Navigatio
             case R.id.nav_rateus:
                 Toast.makeText(this, "Note nous !", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.nav_don:
+                Intent intent9 = new Intent(SortiedumoisActivity.this, DonateActivity.class);
+                startActivity(intent9);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                return true;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
